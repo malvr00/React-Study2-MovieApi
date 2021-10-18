@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import axios from "axios";
 import Movie from "../components/Movie";
 import "./Home.css";
 
-class Home extends Component {
+class Home extends React.Component {
   state = {
-    isLoadgin: true,
+    isLoading: true,
     movies: [],
   };
   getMovies = async () => {
@@ -13,24 +13,25 @@ class Home extends Component {
       data: {
         data: { movies },
       },
-    } = await axios.get("https://yts-proxy.now.sh/list_movies.json");
-
-    this.setState({ movies, isLoadgin: false });
+    } = await axios.get(
+      "https://yts-proxy.now.sh/list_movies.json?sort_by=rating"
+    );
+    this.setState({ movies, isLoading: false });
   };
   componentDidMount() {
     this.getMovies();
   }
   render() {
-    const { isLoadgin, movies } = this.state;
+    const { isLoading, movies } = this.state;
     return (
       <section className="container">
-        {isLoadgin ? (
+        {isLoading ? (
           <div className="loader">
-            <span className="loader__text">Loading..</span>
+            <span className="loader__text">Loading...</span>
           </div>
         ) : (
-          movies.map((movie) => (
-            <div className="movies">
+          <div className="movies">
+            {movies.map((movie) => (
               <Movie
                 key={movie.id}
                 id={movie.id}
@@ -40,8 +41,8 @@ class Home extends Component {
                 poster={movie.medium_cover_image}
                 genres={movie.genres}
               />
-            </div>
-          ))
+            ))}
+          </div>
         )}
       </section>
     );
