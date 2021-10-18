@@ -6,11 +6,12 @@ class App extends Component {
     count: 0,
   };
   add = () => {
-    console.log("add");
+    // current = this로 하지 않고 current로 직접 참조
+    this.setState((current) => ({ count: current.count + 1 }));
   };
 
   minus = () => {
-    console.log("minus");
+    this.setState((current) => ({ count: current.count - 1 }));
   };
   render() {
     return (
