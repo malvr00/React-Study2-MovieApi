@@ -13,6 +13,13 @@ class App extends Component {
   minus = () => {
     this.setState((current) => ({ count: current.count - 1 }));
   };
+  // 처음 render 됐을 때 알려줌
+  componentDidMount() {
+    console.log("test");
+  }
+  componentDidUpdate() {
+    console.log("upated test method");
+  }
   render() {
     return (
       <div>
